@@ -8,7 +8,7 @@
     <section>
         <files id="haxe">
             <compilerflag value="-I${lib_path}/SDL/include"/>
-            <compilerflag value="-I${lib_path}/stb"/>
+            <compilerflag value="-I${lib_path}"/>
             <compilerflag value="-I${figure_include}"/>
 
             <file name="${haxelib:figure}/src/native/frame.c" />
@@ -16,7 +16,7 @@
 
         <files id="__main__">
             <compilerflag value="-I${lib_path}/SDL/include"/>
-            <compilerflag value="-I${lib_path}/stb"/>
+            <compilerflag value="-I${lib_path}"/>
             <compilerflag value="-I${figure_include}"/>
         </files>
 

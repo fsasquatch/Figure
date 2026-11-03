@@ -1,6 +1,6 @@
 package figure.macros;
 
-#if macro
+#if (macro && !display)
 import haxe.macro.Context;
 import haxe.io.Path;
 import sys.FileSystem;

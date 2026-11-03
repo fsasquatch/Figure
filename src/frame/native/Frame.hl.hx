@@ -130,4 +130,6 @@ extern class Frame {
 
     static function drawPrimitives(vertices:Int, instances:Int):Void;
     static function drawIndexedPrimitives(indices:Int, instances:Int):Void;
+
+    static function convertPngToQoi(png:String, qoi:String):Void;
 }

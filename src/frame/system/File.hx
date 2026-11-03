@@ -8,7 +8,9 @@ import js.lib.Promise;
 import js.html.Event;
 #end
 
-// NOTE: Use the storage class for non web games.
+/**
+    Do not use this for loading content in your games.
+**/
 class File {
     public static function loadBytes(file:String):#if !js haxe.io.Bytes #else Promise<haxe.io.Bytes> #end{
 #if !js
@@ -74,4 +76,10 @@ class File {
     public static function isDirectory(entry:String):Bool {
         return Backend.system.isDirectory(entry);
     }
+
+    #if (hl || cpp)
+    public static function convertPngToQoi(png:String, qoi:String) {
+        return frame.native.Frame.convertPngToQoi(png, qoi);
+    }
+    #end
 }

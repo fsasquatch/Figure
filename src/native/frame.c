@@ -2,6 +2,8 @@
 #include <SDL3/SDL_gpu.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#define QOI_IMPLEMENTATION
+#include "qoi.h"
 
 #define frame_MAX_WINDOWS 12
 #define frame_MAX_RENDERPASS 8
@@ -1158,4 +1160,36 @@ void frame_draw_primitives(int vertices, int instances) {
 
 void frame_draw_indexed_primitives(int indices, int instances) {
     SDL_DrawGPUIndexedPrimitives(frame_app.render_passes[frame_app.active_render_pass], indices, instances, 0, 0, 0);
+}
+
+// ----------------------------
+// SECTION: STORAGE & CONTENT
+// ----------------------------
+
+// NOTE: Only RGBA32 support
+void frame_convert_png_to_qoi(const char* png_file, const char* qoi_file) {
+    int w, h, channels;
+    if(!stbi_info(png_file, &w, &h, &channels)) {
+        SDL_Log("ERROR: Couldn't read png header: %s!", qoi_file);
+    }
+
+    if(channels != 3) channels = 4;
+    void* pixels = (void*)stbi_load(png_file, &w, &h, NULL, channels);
+
+    if(pixels == NULL) {
+        SDL_Log("ERROR: Couldn't load png file: %s!", png_file);
+    }
+
+    int encoded = qoi_write(qoi_file, pixels, &(qoi_desc){
+        .width = w,
+        .height = h,
+        .channels = channels,
+        .colorspace = QOI_SRGB
+    });
+
+    if(!encoded) {
+        SDL_Log("ERROR: Couldn't encode: %s!", qoi_file);
+    }
+
+    free(pixels);
 }

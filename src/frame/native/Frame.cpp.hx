@@ -158,4 +158,6 @@ extern class Frame {
 
     @:native("frame_draw_primitives") static function drawPrimitives(vertices:Int, instances:Int):Void;
     @:native("frame_draw_indexed_primitives") static function drawIndexedPrimitives(indices:Int, instances:Int):Void;
+    
+    @:native("frame_convert_png_to_qoi") static function convertPngToQoi(png:String, qoi:String):Void;
 }

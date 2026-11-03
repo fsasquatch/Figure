@@ -108,6 +108,8 @@ class App {
         update();
         draw();
 
+        fixedUpdate();
+
         Browser.window.requestAnimationFrame((currentTime) -> {
             js_update();
         });

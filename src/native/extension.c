@@ -499,3 +499,11 @@ HL_PRIM void HL_NAME(draw_indexed_primitives)(int indices, int instances) {
     frame_draw_indexed_primitives(indices, instances);
 }
 DEFINE_PRIM(_VOID, draw_indexed_primitives, _I32 _I32);
+
+// ----------------------------
+// SECTION: STORAGE & CONTENT
+// ----------------------------
+HL_PRIM void HL_NAME(convert_png_to_qoi)(vstring* file, vstring* out) {
+    frame_convert_png_to_qoi(hl_to_utf8(file->bytes), hl_to_utf8(out->bytes));
+}
+DEFINE_PRIM(_VOID, convert_png_to_qoi, _STRING _STRING);

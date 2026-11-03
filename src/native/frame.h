@@ -139,6 +139,13 @@ void frame_set_fragment_sampler(SDL_GPUTexture* texture, SDL_GPUSampler* sampler
 void frame_draw_primitives(int vertices, int instances);
 void frame_draw_indexed_primitives(int indices, int instances);
 
+// ----------------------------
+// SECTION: STORAGE & CONTENT
+// ----------------------------
+
+void frame_convert_png_to_qoi(const char* png_file, const char* qoi_file);
+
+
 #ifdef __cplusplus
 }
 #endif
