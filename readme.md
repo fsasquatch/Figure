@@ -8,4 +8,4 @@ Figure is a game engine written made personally for my use in Haxe utilizing ECS
 - **Desktop** (SDL_Gpu)
 - **Web** (WebGL)
 - **Consoles** (theoretically?)
-- **Android** & **IOS** (also theoretically)
+- **Android** & **IOS** (also theoretical)
