@@ -1,6 +1,6 @@
 # Figure
 *A muse for my art*
-> Extremely WIP! Go Away!
+> WIP. Go Away!
 
 Figure is a game engine written in Haxe utilizing ECS. Targeting **Hashlink** & **HXCPP** primarily with a WIP **JS** backend.
 
