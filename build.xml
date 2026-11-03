@@ -1,0 +1,59 @@
+<xml>
+    <pragma once="true"/>
+
+    <set name="figure_include" value="${haxelib:figure}/src/native"/>
+    <set name="lib_path" value="${haxelib:figure}/libs"/>
+    <set name="sdl3_lib" value="${haxelib:figure}/build/libs/SDL"/>
+
+    <section>
+        <files id="haxe">
+            <compilerflag value="-I${lib_path}/SDL/include"/>
+            <compilerflag value="-I${lib_path}/stb"/>
+            <compilerflag value="-I${figure_include}"/>
+
+            <file name="${haxelib:figure}/src/native/frame.c" />
+        </files>
+
+        <files id="__main__">
+            <compilerflag value="-I${lib_path}/SDL/include"/>
+            <compilerflag value="-I${lib_path}/stb"/>
+            <compilerflag value="-I${figure_include}"/>
+        </files>
+
+        <target id="haxe" tool="linker" toolid="exe" if="windows">
+            <lib name="${sdl3_lib}/SDL3.lib"/>
+
+            <lib name="winmm.lib"/>
+            <lib name="gdi32.lib"/>
+            <lib name="user32.lib"/>
+            <lib name="ole32.lib"/>
+            <lib name="oleaut32.lib"/>
+            <lib name="shell32.lib"/>
+            <lib name="advapi32.lib"/>
+            <lib name="setupapi.lib"/>
+            <lib name="imm32.lib"/>
+            <lib name="cfgmgr32.lib"/>
+            <lib name="version.lib"/>
+        </target>
+
+        <target id="haxe" if="linux">
+            <lib name="-L${sdl3_lib}"/>
+            <lib name="-lSDL3"/>
+
+            <lib name="-ldl"/>
+            <lib name="-lpthread"/>
+            <lib name="-lm"/>
+        </target>
+
+        <target id="haxe" if="android">
+            <lib name="-L${sdl3_lib_android}"/>
+            <lib name="-lSDL3"/>
+
+            <lib name="-llog"/>
+            <lib name="-landroid"/>
+            <lib name="-lEGL"/>
+            <lib name="-lGLESv3"/>
+            <lib name="-lOpenSLES"/>
+        </target>
+    </section>
+</xml>

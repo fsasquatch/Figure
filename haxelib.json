@@ -1,0 +1,11 @@
+{
+    "name": "figure",
+    "url": "",
+    "license": "MIT",
+    "tags": [],
+    "description": "",
+    "version": "0.0.1",
+    "releasenote": "released",
+    "contributors": ["krisgetsittogether"],
+    "classPath": "src"
+}

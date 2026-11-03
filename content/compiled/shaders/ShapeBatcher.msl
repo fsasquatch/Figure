@@ -1,0 +1,103 @@
+#pragma clang diagnostic ignored "-Wmissing-prototypes"
+#pragma clang diagnostic ignored "-Wmissing-braces"
+
+#include <metal_stdlib>
+#include <simd/simd.h>
+
+using namespace metal;
+
+template<typename T, size_t Num>
+struct spvUnsafeArray
+{
+    T elements[Num ? Num : 1];
+    
+    thread T& operator [] (size_t pos) thread
+    {
+        return elements[pos];
+    }
+    constexpr const thread T& operator [] (size_t pos) const thread
+    {
+        return elements[pos];
+    }
+    
+    device T& operator [] (size_t pos) device
+    {
+        return elements[pos];
+    }
+    constexpr const device T& operator [] (size_t pos) const device
+    {
+        return elements[pos];
+    }
+    
+    constexpr const constant T& operator [] (size_t pos) const constant
+    {
+        return elements[pos];
+    }
+    
+    threadgroup T& operator [] (size_t pos) threadgroup
+    {
+        return elements[pos];
+    }
+    constexpr const threadgroup T& operator [] (size_t pos) const threadgroup
+    {
+        return elements[pos];
+    }
+};
+
+struct SpriteData
+{
+    packed_float3 Position;
+    float Rotation;
+    float2 Scale;
+    float2 Offset;
+    float TexU;
+    float TexV;
+    float TexW;
+    float TexH;
+    float4 Color;
+    float4 ShapeOne;
+    float4 ShapeTwo;
+};
+
+struct type_StructuredBuffer_SpriteData
+{
+    SpriteData _m0[1];
+};
+
+struct type_UniformBlock
+{
+    float4x4 ViewProjectionMatrix;
+};
+
+constant spvUnsafeArray<uint, 6> _49 = spvUnsafeArray<uint, 6>({ 0u, 1u, 2u, 3u, 2u, 1u });
+constant spvUnsafeArray<float2, 4> _54 = spvUnsafeArray<float2, 4>({ float2(0.0), float2(1.0, 0.0), float2(0.0, 1.0), float2(1.0) });
+
+struct main0_out
+{
+    float2 out_var_TEXCOORD0 [[user(locn0)]];
+    float4 out_var_TEXCOORD1 [[user(locn1)]];
+    float4 out_var_TEXCOORD2 [[user(locn2)]];
+    float4 out_var_TEXCOORD3 [[user(locn3)]];
+    float4 gl_Position [[position]];
+};
+
+vertex main0_out main0(constant type_UniformBlock& UniformBlock [[buffer(0)]], const device type_StructuredBuffer_SpriteData& DataBuffer [[buffer(1)]], uint gl_VertexIndex [[vertex_id]])
+{
+    main0_out out = {};
+    uint _58 = gl_VertexIndex / 6u;
+    uint _59 = gl_VertexIndex % 6u;
+    float _75 = DataBuffer._m0[_58].TexU + DataBuffer._m0[_58].TexW;
+    float _76 = DataBuffer._m0[_58].TexV + DataBuffer._m0[_58].TexH;
+    spvUnsafeArray<float2, 4> _81 = spvUnsafeArray<float2, 4>({ float2(DataBuffer._m0[_58].TexU, DataBuffer._m0[_58].TexV), float2(_75, DataBuffer._m0[_58].TexV), float2(DataBuffer._m0[_58].TexU, _76), float2(_75, _76) });
+    spvUnsafeArray<float2, 4> _56 = _81;
+    float _82 = cos(DataBuffer._m0[_58].Rotation);
+    float _83 = sin(DataBuffer._m0[_58].Rotation);
+    float2 _86 = _54[_49[_59]] * DataBuffer._m0[_58].Scale;
+    out.out_var_TEXCOORD0 = _56[_49[_59]];
+    out.out_var_TEXCOORD1 = DataBuffer._m0[_58].Color;
+    out.gl_Position = UniformBlock.ViewProjectionMatrix * float4((float2x2(float2(_82, _83), float2(-_83, _82)) * float2(_86.x - DataBuffer._m0[_58].Offset.x, _86.y - DataBuffer._m0[_58].Offset.y)) + float2(DataBuffer._m0[_58].Position[0], DataBuffer._m0[_58].Position[1]), DataBuffer._m0[_58].Position[2], 1.0);
+    out.out_var_TEXCOORD2 = DataBuffer._m0[_58].ShapeOne;
+    out.out_var_TEXCOORD3 = DataBuffer._m0[_58].ShapeTwo;
+    return out;
+}
+
